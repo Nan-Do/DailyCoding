@@ -1,0 +1,20 @@
+Implement an URL shortener with this two methods: 
+    - shorten(Url) -> short six-characters (alphanumeric)
+    - restore(short) -> Url
+
+Two general methods:
+    One is to generate all possible combinations and keep two databases/dictionaries each time a new shortened url 
+    is required ask the database with the shortened strings for a key and update the database for the results 
+    with the url-short pair. For the restore operation we query the database with the results to check if it 
+    already exists. Before generating a new shortened version we check if that url is already at the 
+    database this will handle the case of introducing the same url twice.
+
+    Another one is to use a hashing function to generate the shortened string, this introduce the problem of 
+    handling collisions as two different urls can have the same shortened string. To solve it we can add
+    a payload to the url before generating the shortened string. The workflow is as follows, first we check if 
+    we check if the url is already in the database, if it is not in the dababase we generate a new shortened 
+    string using the hashing function, if the shortened string doesn't exist in the database we update the 
+    database and return the shortened url. In case the shortened url is already in the database we add a 
+    payload to the url and generate a new shortened url. We repeat this process until the generated shortened 
+    string for the url doesn't exist on the database. As payload we can use a counter or the current time. On 
+    the database we don't store the payload.

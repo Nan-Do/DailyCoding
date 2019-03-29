@@ -1,0 +1,22 @@
+Designing question:
+
+"Implement a file syncing algorithm for two computers over a low-bandwidth network. What if we know the files in two computers are almost the same"
+
+Key Ideas:
+    - Low-bandwith
+    - Working with files
+
+First approach identify each file by key aspects like:
+    Filename, creation_time, size, hash of the contents
+
+We can create a sorted lists in both computers and do check indidually each file to see if it exists on the other computer in case it does update the list pointer on both ends if one of the files does not exist (or it is different) send the file and update the list pointer on the computer that is sending the file
+
+If we know that the files in both computers are almost the same we can break down the files into block and repeat this process using the blocks instead of the whole files.
+
+Problems:
+    How to keep the list coherent once a file/block that doesn't exist is sent?
+        We can use a double linked list and update the list using a linear approach, if we know that we most of the files are the same we can use a bisect (binary search to find the location)
+
+    How to send the data? tcp/udp
+
+    How the master/slave works?  When to swtich which side updates the counter? Switch the side that is in charge of updating the counter each time

@@ -1,0 +1,39 @@
+Suppose you are given a table of currency exchange rates, represented as a 2D array. Determine whether 
+there is a possible arbitrage: that is, whether there is some sequence of trades you can make, starting 
+with some amount A of any currency, so that you can end up with some amount greater than A of that currency.
+
+Example of input: 
+    [(Dollar, Euro, 0.88), 
+     (Euro, Dollar, 1.12),
+     (Dollar, Yen, 0.75),
+     ...]
+
+First step build a table using the input data:
+             Dollar Euro  Yen ....
+    Dollar       0  0.88 0.75
+    Euro      1.12     0  ...
+    Yen        ...
+    ...
+
+At google I was asked if a possible translation was possible. This is a very vague question
+a possible answer to discuss with the examiner would be starting with one currency perform a
+breadth-first search using as accumulated value 1 and perform the multiplication.
+For example code the code in python for that would be:
+    
+    dollar_row = 0
+    frontier = [(dollar_row, 1)]
+
+    while frontier:
+        currency, accumulated = frontier.pop()
+
+        if currency in visited:
+            continue
+
+        for other_currency, value in enumerate(currencies[currency]):
+            frontier.append(other_currency, accumulated * value)
+
+
+Example of the execution
+    frontier = [(Dollar, 1)]
+    other_currencies = [Euro, Yen]
+    frontier ((Euro, 0.88), (Yen, 1.12))
